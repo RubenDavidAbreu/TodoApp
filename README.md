@@ -81,8 +81,8 @@ Vous pouvez filtrer les tâches selon leur statut (terminé ou non) grâce aux o
 
 Fonctionnalités
 
-CRUD complet : Créez, lisez, modifiez et supprimez des tâches.
-Marquer comme terminé : Une fois la tâche accomplie, marquez-la comme terminée.
-Filtrage : Affichez les tâches en fonction de leur statut.
-Confirmation avant suppression : Une confirmation est demandée avant de supprimer une tâche.
-API REST : Récupérez les tâches au format JSON via l'API.
+- CRUD complet : Créez, lisez, modifiez et supprimez des tâches.
+- Marquer comme terminé : Une fois la tâche accomplie, marquez-la comme terminée.
+- Filtrage : Affichez les tâches en fonction de leur statut.
+- Confirmation avant suppression : Une confirmation est demandée avant de supprimer une tâche.
+- API REST : Récupérez les tâches au format JSON via l'API.
