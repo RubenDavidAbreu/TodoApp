@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des tâches{% endblock %}
+
+{% block body %}
+    <h1 class="mb-4">Liste des tâches</h1>
+
+    <form action="{{ path('app_task_index') }}" method="get" class="mb-4">
+        <div class="form-group">
+            <label for="status">Filtrer par statut :</label>
+            <select name="status" id="status" class="form-control">
+                <option value="">Toutes les tâches</option>
+                <option value="1" {% if app.request.query.get('status') == '1' %}selected{% endif %}>Terminées</option>
+                <option value="0" {% if app.request.query.get('status') == '0' %}selected{% endif %}>En cours</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Filtrer</button>
+    </form>
+
+    <a href="{{ path('app_task_new') }}" class="btn btn-primary mb-3">Créer une nouvelle tâche</a>
+
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+                <tr>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.description }}</td>
+                    <td>
+                        {% if task.status %}
+                            <span class="badge bg-success">Terminé</span>
+                        {% else %}
+                            <span class="badge bg-warning">En cours</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('app_task_edit', {'id': task.id}) }}" class="btn btn-secondary btn-sm">Modifier</a>
+
+                        <form action="{{ path('app_task_delete', {'id': task.id}) }}" method="post" style="display:inline;" onsubmit="return confirmDelete();">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ task.id) }}">
+                            <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                        </form>
+
+                        <script>
+                            function confirmDelete() {
+                                return confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?');
+                            }
+                        </script>
+
+                        {% if not task.status %}
+                            <form action="{{ path('app_task_mark_done', {'id': task.id}) }}" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-success btn-sm">Marquer comme terminé</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
